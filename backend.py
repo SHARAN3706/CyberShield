@@ -1,5 +1,7 @@
 import socket
 import threading
+
+
 def scan_port(host, port, open_ports):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(0.3)
@@ -8,20 +10,23 @@ def scan_port(host, port, open_ports):
         open_ports.append(port)
 
     s.close()
+
+
 def scan_ports(host):
     host = socket.gethostbyname(host)
+
     open_ports = []
     ports = [21, 22, 25, 53, 80, 443, 3306, 8080]
 
- threads = []
+    threads = []
 
-for port in ports:
-    t = threading.Thread(target=scan_port, args=(host, port, open_ports))
-    threads.append(t)
-    t.start()
+    for port in ports:
+        t = threading.Thread(target=scan_port, args=(host, port, open_ports))
+        threads.append(t)
+        t.start()
 
-for t in threads:
-    t.join()
+    for t in threads:
+        t.join()
 
     risk_score = len(open_ports) * 12
 

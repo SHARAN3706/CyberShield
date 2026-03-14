@@ -9,6 +9,7 @@ def scan_port(host, port, open_ports):
 
     s.close()
 def scan_ports(host):
+    host = socket.gethostbyname(host)
     open_ports = []
     ports = [21, 22, 25, 53, 80, 443, 3306, 8080]
 

@@ -1,5 +1,13 @@
 import socket
+import threading
+def scan_port(host, port, open_ports):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.settimeout(0.3)
 
+    if s.connect_ex((host, port)) == 0:
+        open_ports.append(port)
+
+    s.close()
 def scan_ports(host):
     open_ports = []
     ports = [21, 22, 25, 53, 80, 443, 3306, 8080]
